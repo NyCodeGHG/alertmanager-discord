@@ -130,7 +130,7 @@ func checkWebhookURL(webhookURL string) {
 		log.Fatalf("The Discord WebHook URL doesn't seem to be a valid URL.")
 	}
 
-	re := regexp.MustCompile(`https://discord(?:app)?.com/api/webhooks/[0-9]{18}/[a-zA-Z0-9_-]+`)
+	re := regexp.MustCompile(`https://discord(?:app)?.com/api/webhooks/[0-9]{17,19}/[a-zA-Z0-9_-]+`)
 	if ok := re.Match([]byte(webhookURL)); !ok {
 		log.Printf("The Discord WebHook URL doesn't seem to be valid.")
 	}
@@ -152,9 +152,10 @@ func sendWebhook(alertManagerData *AlertManagerData) {
 
 		for indx, alert := range alerts {
 			embedAlertMessage := DiscordEmbed{
-				Title:  getAlertTitle(&alert),
-				Color:  color,
-				Fields: DiscordEmbedFields{},
+				Title:       getAlertTitle(&alert),
+				Color:       color,
+				Fields:      DiscordEmbedFields{},
+				Description: "\u200B",
 			}
 
 			if alert.Annotations["summary"] != "" {
