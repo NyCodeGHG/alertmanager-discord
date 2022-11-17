@@ -221,10 +221,11 @@ func buildDiscordMessage(alertManagerData *AlertManagerData, status string, numb
 	discordMessage := DiscordMessage{}
 	addOverrideFields(&discordMessage)
 	messageHeader := DiscordEmbed{
-		Title:  fmt.Sprintf("[%s:%d] %s", strings.ToUpper(status), numberOfAlerts, getAlertName(alertManagerData)),
-		URL:    alertManagerData.ExternalURL,
-		Color:  color,
-		Fields: DiscordEmbedFields{},
+		Title:       fmt.Sprintf("[%s:%d] %s", strings.ToUpper(status), numberOfAlerts, getAlertName(alertManagerData)),
+		URL:         alertManagerData.ExternalURL,
+		Color:       color,
+		Fields:      DiscordEmbedFields{},
+		Description: "​",
 	}
 	discordMessage.Embeds = DiscordEmbeds{messageHeader}
 	return discordMessage
